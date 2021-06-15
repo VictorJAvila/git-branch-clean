@@ -18,7 +18,7 @@ then
 fi
 
 echo -e "Te encuentras en la rama \e[1;32m$CURRENT_BRANCH\e[0m. ¿Continuar? (y/n) "
-read -N 1
+read -n1
 
 if [ "$REPLY" != "y" ]
 then
@@ -27,7 +27,6 @@ fi
 
 # Get merged local branches on master
 MERGED_BRANCHES=$(git branch --merged $CURRENT_BRANCH | grep -v "$CURRENT_BRANCH$" | grep -v "master$" | grep -v "develop$" | grep -v "main$")
-read -N 1
 
 if [ -z "$MERGED_BRANCHES" ]
 then
@@ -38,9 +37,11 @@ echo -e "\nSe han encontrado las siguientes ramas mergeadas localmente: \n"
 echo "$MERGED_BRANCHES"
 
 echo -e "\n¿Estás seguro de querer \e[1;31meliminar\e[0m las ramas? (y/n) "
+read -n1
 
 if [ "$REPLY" == "y" ]
 then
+    echo "\n"
     git branch -d $MERGED_BRANCHES
     echo -e "\e[1;32mOperación realizada correctamente.\e[0m"
     exit 0
